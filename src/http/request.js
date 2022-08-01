@@ -22,7 +22,31 @@ const post = (config) => {
     )
 }
 
+// 封装put请求
+const put = (config) => {
+    return Server(
+        {
+            ...config,
+            method:'put',
+            data:config.data
+        }
+    )
+}
+
+// 封装delete请求
+const deleteRequest = (config) => {
+    return Server(
+        {
+            ...config,
+            method:'delete',
+            data:config.data
+        }
+    )
+}
+
 export default{
     get,
     post,
+    put,
+    deleteRequest,
 }

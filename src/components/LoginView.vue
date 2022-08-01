@@ -28,7 +28,7 @@
 
 <script>
     import { ElMessage } from 'element-plus'
-import {defineComponent} from 'vue'
+    import {defineComponent} from 'vue'
     import loginApi from '../http/api/login.js'
     export default defineComponent({    
         data() {
@@ -63,9 +63,9 @@ import {defineComponent} from 'vue'
                 // 登录前验证
                 this.$refs.loginFormRef.validate(async(vali)=>{
                     if(!vali) return
-                    const res = await loginApi(this.loginForm)
-                    console.log(res)
-                    if(res.meta.status != 200){
+                    try {
+                        const res = await loginApi(this.loginForm)
+                        if(res.meta.status != 200){
                         ElMessage.error(res.meta.msg)
                     }else{
                         ElMessage.success(res.meta.msg)
@@ -74,6 +74,9 @@ import {defineComponent} from 'vue'
                         // 2.编程式导航跳转到页面
                         this.$router.push('/home')
                         // 3.路由守卫控制权限
+                    }
+                    } catch (error) {
+                        ElMessage.error('请求服务失败')
                     }
                 })
             }

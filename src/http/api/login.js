@@ -2,7 +2,7 @@ import login from '../request.js'
 
 const loginApi = (data) => {
     return login.post({
-        url:'/api/private/v1/login',
+        url:'/login',
         data:data
     })
 }

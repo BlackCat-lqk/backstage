@@ -13,8 +13,26 @@ const routes = [
   },
   {
     path: '/home',
+    redirect: '/welcome',
     name: 'home',
-    component: () => import(/* webpackChunkName: "home" */ '../views/HomeView.vue')
+    component: () => import(/* webpackChunkName: "home" */ '../views/HomeView.vue'),
+    children:[
+      {
+        path:'/welcome',
+        name:'welcome',
+        component:() => import(/* webpackChunkName: "welcome" */ '../views/WelcomeView.vue'),
+      },
+      {
+        path:'/users',
+        name:'users',
+        component:() => import(/* webpackChunkName: "user" */ '../views/UsersView.vue'),
+      },
+      {
+        path:'/rights',
+        name:'rights',
+        component:() => import(/* webpackChunkName: "user" */ '../views/RightsView.vue'),
+      },
+    ]
   }
 ]
 
