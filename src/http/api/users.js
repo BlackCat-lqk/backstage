@@ -51,6 +51,14 @@ const deleteUserInfoApi = (data) => {
     })
 }
 
+// 分配用户角色
+const distributeUserRoleApi = (urlData, data) => {
+    return users.put({
+        url:urlData,
+        data:data
+    })
+}
+
 export default {
     usersApi, 
     usersStatusApi,
@@ -58,4 +66,5 @@ export default {
     editUsersApi,
     userIdInfoApi,
     deleteUserInfoApi,
+    distributeUserRoleApi
 }

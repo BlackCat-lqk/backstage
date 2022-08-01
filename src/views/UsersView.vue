@@ -73,11 +73,11 @@
                 </el-table-column>
                 <el-table-column  label="操作">
                     <template #default="scope">
-                        <el-button type="primary" icon="Edit" @click="editUserDialog(scope.row.id)"/>
+                        <el-button type="primary" icon="Edit" @click="editUserDialog(scope.row.id)">编辑</el-button>
                         <!-- 删除用户 -->
-                        <el-button type="danger" icon="Delete" @click="deleteUserInfo(scope.row.id)" />
+                        <el-button type="danger" icon="Delete" @click="deleteUserInfo(scope.row.id)">删除</el-button>
                         <!-- 更多 -->
-                        <el-button type="warning" icon="More" />
+                        <el-button type="warning" icon="More" @click="distributeRoleDialog(scope.row)">分配角色</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -123,6 +123,33 @@
             </span>
             </template>
         </el-dialog>
+        <!-- 分配角色信息对话框 -->
+        <el-dialog
+            v-model="distributeDialogVisible"
+            title="分配角色"
+            width="30%"
+        >
+            <div>
+                <span>当前的用户：{{currentUser}}</span>
+            </div>
+            <div>
+                <span>当前的角色：{{currentRole}}</span>
+            </div>
+            <el-select v-model="reloeChangeId" class="m-2" placeholder="Select" size="large">
+                <el-option
+                v-for="item in distributeReloList"
+                :key="item.id"
+                :label="item.roleName"
+                :value="item.id"
+                />
+            </el-select>
+            <template #footer>
+            <span class="dialog-footer">
+                <el-button @click="distributeDialogVisible=false">取消</el-button>
+                <el-button type="primary" @click="distributeRoleCommit">确认</el-button>
+            </span>
+            </template>
+        </el-dialog>
     </div>    
 </template>
 
@@ -130,6 +157,7 @@
     import { ElMessage, ElMessageBox } from 'element-plus'
     import {defineComponent} from 'vue'
     import users from '../http/api/users.js'
+    import roles from '../http/api/roles.js'
     
     export default defineComponent({
         data() {
@@ -214,7 +242,17 @@
                         { required: true, message: '请输入合法的手机号', trigger: 'blur' },
                         {validator:checkMobile, trigger:'blur'}
                     ],
-                }
+                },
+                // 是否显示分配角色对话框
+                distributeDialogVisible:false,
+                currentUser:'',
+                currentRole:'',
+                // 分配的角色选项
+                distributeReloList:[],
+                // 选中的角色id
+                reloeChangeId:'',
+                // 权限id
+                userChangeId:'',
             }
         },
         created(){
@@ -337,9 +375,26 @@
                         type: 'error',
                         message: '删除失败',
                     })
-                })
-                    
-                    
+                })      
+            },
+            // 分配角色对话框
+            async distributeRoleDialog(row){
+                this.currentRole = row.role_name
+                this.currentUser = row.username
+                this.distributeDialogVisible = true
+                const res = await roles.getRolesList('')
+                if(res.meta.status != 200) return ElMessage.error(res.meta.msg)
+                this.distributeReloList = res.data
+                this.userChangeId = row.id
+            },
+            // 确认提交分配角色
+            async distributeRoleCommit(){
+                if(!this.reloeChangeId) return ElMessage.error('请选择要分配的角色')
+                const res = await users.distributeUserRoleApi(`/users/${this.userChangeId}/role`, {rid:this.reloeChangeId})
+                if(res.meta.status != 200) return ElMessage.error(res.meta.msg)
+                ElMessage.success(res.meta.msg)
+                this.getUsersList()
+                this.distributeDialogVisible = false
             }
         },
     })
