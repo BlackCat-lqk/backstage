@@ -37,6 +37,36 @@ const routes = [
         name:'roles',
         component:() => import(/* webpackChunkName: "roles" */ '../views/RolesView.vue'),
       },
+      {
+        path:'/categories',
+        name:'categories',
+        component:() => import(/* webpackChunkName: "cate" */ '../views/CateView.vue'),
+      },
+      {
+        path:'/params',
+        name:'params',
+        component:() => import(/* webpackChunkName: "params" */ '../views/ParamsView.vue'),
+      },
+      {
+        path:'/goods',
+        name:'goods',
+        component:() => import(/* webpackChunkName: "goods" */ '../views/GoodsView.vue'),
+      },
+      {
+        path:'/goods/add',
+        name:'add',
+        component:()=>import(/* webpackChunkName: "add" */ '../views/AddShopView.vue'),
+      },
+      {
+        path:'/orders',
+        name:'orders',
+        component:()=>import(/* webpackChunkName: "orders" */ '../views/OrderView.vue'),
+      },
+      {
+        path:'/reports',
+        name:'reports',
+        component:()=>import(/* webpackChunkName: "reports" */ '../views/ReportsView.vue'),
+      },
     ]
   }
 ]
