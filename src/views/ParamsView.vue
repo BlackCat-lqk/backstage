@@ -82,9 +82,6 @@
                 const res = await categories.categoriesListApi()
                 if(res.meta.status != 200) return ElMessage.error(res.meta.msg)
                 this.categoriesList = res.data
-                console.log(res)
-                // this.total = res.lenght
-                // console.log(this.res.data.total)
             },
             // 级联选择框选中项变化监听
             handleChange(){
@@ -92,7 +89,6 @@
                 if(this.selectedCateKeys.length != 3){
                     this.selectedCateKeys = []
                 }
-                console.log(this.selectedCateKeys)
             },
             // 页签点击激活事件
             handleTabClick(){

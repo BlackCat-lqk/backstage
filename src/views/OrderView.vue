@@ -29,8 +29,8 @@
                         </template>
                     </el-table-column>
                     <el-table-column label="操作">
-                        <template #default="scope">
-                            <el-button type="primary" icon="Edit" @click="pay(scope.row)">付款</el-button>
+                        <template #default="">
+                            <el-button type="primary" icon="Edit" @click="pay()">付款</el-button>
                             <!-- 删除用户 -->
                             <el-button type="danger" icon="Delete">定位</el-button>
                         </template>
@@ -73,10 +73,10 @@ export default defineComponent({
             if(res.meta.status != 200) return ElMessage.error(res.meta.msg)
             this.getOrderDataList = res.data.goods
             this.total = res.data.total
-            console.log(this.getOrderDataList)
+
         },
-        pay(params){
-            console.log(params)
+        pay(){
+            
         },
         // 时间计算属性
         dataFormat(originval){

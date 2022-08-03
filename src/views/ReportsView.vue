@@ -100,7 +100,6 @@ export default defineComponent({
             for(let i = 0; i < res.data.series.length; i++){
                 this.series.push(res.data.series[i])
             }
-            console.log('拿到echarts数据')
         }
     },
 })

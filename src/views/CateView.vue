@@ -46,9 +46,6 @@
                 const res = await categories.categoriesListApi()
                 if(res.meta.status != 200) return ElMessage.error(res.meta.msg)
                 this.categoriesList = res.data
-                console.log(res)
-                // this.total = res.lenght
-                // console.log(this.res.data.total)
             }
         },
     })

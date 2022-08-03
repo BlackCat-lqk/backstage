@@ -357,7 +357,6 @@
                     }
                 ).then( async() => {
                     const res = await users.deleteUserInfoApi(`/users/${id}`)
-                    console.log(res)
                     if(res.meta.status != 200){
                         ElMessage({
                             type: 'error',
